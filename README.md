@@ -83,7 +83,7 @@ feature engineering 방법으로 PCA를 사용했다.
 ```
 pipeline = Pipeline([
     ('pca', PCA(n_components=0.95)),
-    ('clf', SVC(kernel='rbf', probability=True, C = 10, gamma = 'scale'))
+    ('clf', SVC(kernel='poly', degree = 3, coef0 = 1, probability=True, C = 10, gamma = 'scale'))
 ])
 ```
 
@@ -101,7 +101,7 @@ C가 크면 오류를 최대한 허용하지 않기 위해 decision boundary는 
 
 C가 작으면 decision boundary는 직선에 가깝게 된다.
 
-gamma는 rbf같은 비선형 커널의 반경을 결정하는 하이퍼파라미터로
+gamma는 rbf나 poly같은 비선형 커널의 반경을 결정하는 하이퍼파라미터로
 
 C와 마찬가지로 gamma가 크면 각 샘플의 영향 범위가 좁아져 decision boundary가 더욱 복잡해지고(overfitting의 위험성 증가)
 
@@ -111,14 +111,17 @@ Kernel은 데이터를 더 높은 차원의 공간으로 매핑하여, 비선형
 
 이 3개의 하이퍼파라미터에 대해
 
-나는 Kernel을 'Linear'가 아닌 'RBF'로 둬서 비선형 분리를 가능하게끔 설정하였고
+나는 Kernel을 'Linear'가 아닌 'poly'로 둬서 비선형 분리를 가능하게끔 설정하였고, 그에 따른 poly의 하이퍼파라미터를 degree = 3, coef0 = 1로 설정하였다. (하이퍼파라미터 튜닝을 통해 정한 값)
 
-하이퍼파라미터 C와 gamma에 대해서는 grid search를 통해 최적의 하이퍼 파라미터를 탐색하는 방법을 사용하였다.
+나머지 하이퍼파라미터 C와 gamma에 대해서는 grid search를 통해 최적의 하이퍼 파라미터를 탐색하는 방법을 사용하여 C = 10, gamma = 'scale'으로 설정하였다.
+
+
+(이 grid search를 해 본 결과 C = 10, gamma = 'scale'일 때가 최적의 결과로 나왔다.)
 
 ```
 pipeline = Pipeline([
     ('pca', PCA(n_components=0.95)),
-    ('clf', SVC(kernel='rbf', probability=True))
+    ('clf', SVC(kernel='poly', degree = 3, coef0 = 1 , probability=True))
 ])
 
 # 하이퍼파라미터 그리드 설정
@@ -152,14 +155,14 @@ print("Test set accuracy: {:.2f}%".format(accuracy * 100))
 ```
 pipeline = Pipeline([
     ('pca', PCA(n_components=0.95)),
-    ('clf', SVC(kernel='rbf', probability=True, C = 10, gamma = 'scale'))
+    ('clf', SVC(kernel='poly', degree = 3, coef0 = 1, probability=True, C = 10, gamma = 'scale'))
 ])
 pipeline.fit(X_train, y_train)
 
-y_pred = clf.predict(X_test)
+y_pred = pipeline.predict(X_test)
 print('Accuracy: %f' % sklearn.metrics.accuracy_score(y_test, y_pred))
 ```
 이 코드를 통해 accuracy를 측정해본 결과 
 
-Accuracy: 0.922184 가 나왔다.
+Accuracy: 0.909408 가 나왔다.
 
