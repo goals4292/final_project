@@ -160,5 +160,6 @@ y_pred = clf.predict(X_test)
 print('Accuracy: %f' % sklearn.metrics.accuracy_score(y_test, y_pred))
 ```
 이 코드를 통해 accuracy를 측정해본 결과 
+
 Accuracy: 0.922184 가 나왔다.
 
