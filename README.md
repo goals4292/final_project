@@ -145,9 +145,21 @@ print("Test set accuracy: {:.2f}%".format(accuracy * 100))
 
 (이 grid search를 해 본 결과 C = 10, gamma = 'scale'일 때가 최적의 결과로 나왔다.)
 
+-----------------------------------------------------------
 
+### Accuracy 결과
 
+```
+pipeline = Pipeline([
+    ('pca', PCA(n_components=0.95)),
+    ('clf', SVC(kernel='rbf', probability=True, C = 10, gamma = 'scale'))
+])
+pipeline.fit(X_train, y_train)
 
+y_pred = clf.predict(X_test)
+print('Accuracy: %f' % sklearn.metrics.accuracy_score(y_test, y_pred))
+```
 
-
+이 코드를 통해 accuracy를 측정해본 결과 
+> Accuracy: 0.922184 가 나왔다.
 
