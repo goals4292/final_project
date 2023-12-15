@@ -80,6 +80,13 @@ feature engineering 방법으로 PCA를 사용했다.
 
 이 PCA와 SVM을 pipeline으로 묶어 하나의 classification 알고리즘을 만들었다.
 
+```
+pipeline = Pipeline([
+    ('pca', PCA(n_components=0.95)),
+    ('clf', SVC(kernel='rbf', probability=True, C = 10, gamma = 'scale'))
+])
+```
+
 -----------------------------------------------------------
 
 ### Hyper-parameter  설명
