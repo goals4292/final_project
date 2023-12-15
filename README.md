@@ -172,4 +172,5 @@ Accuracy: 0.909408 가 나왔다.
 
 파일이 약간 수정될 수도 있는데
 몇 시간 동안 grid search를 통한 최적의 하이퍼파라미터를 계속해서 찾음으로써 classification의 hyper-parameter만 약간 변경하는 것입니다.
+
 classification 알고리즘 자체는 항상 그대로이며 하이퍼파라미터 값만 약간 수정된 것입니다.)
