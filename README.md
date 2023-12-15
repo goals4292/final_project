@@ -114,24 +114,19 @@ pipeline = Pipeline([
     ('clf', SVC(kernel='rbf', probability=True))
 ])
 
-# 하이퍼파라미터 그리드 설정
 param_grid = {
     'clf__C': [0.1, 1, 10, 100],
     'clf__gamma': ['scale', 'auto', 0.1, 0.01, 0.001, 0.0001],
 }
 
-# 그리드 서치로 최적의 하이퍼파라미터 탐색
 grid_search = GridSearchCV(pipeline, param_grid, cv=5, n_jobs=-1)
 grid_search.fit(X_train, y_train)
 
-# 최적의 파라미터 조합과 그때의 성능 출력
 print("Best parameters found: ", grid_search.best_params_)
 print("Best cross-validated accuracy: {:.2f}%".format(grid_search.best_score_ * 100))
 
-# 테스트 데이터셋에 대해 예측
 y_pred = grid_search.predict(X_test)
 
-# 정확도 계산
 accuracy = accuracy_score(y_test, y_pred)
 print("Test set accuracy: {:.2f}%".format(accuracy * 100))
 '''
